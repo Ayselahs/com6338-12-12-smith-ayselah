@@ -24,37 +24,47 @@ class Word {
     this.incorrectLetters = []
     this.correctLetters = []
   }
-
+ // implement the guessLetter function:
+  // guessLetter(letter) {}
   guessLetter(letter) {
+    if (this.correctLetters.includes(letter) || this.incorrectLetters.includes(letter)) {return; }
+    // if letter is in word, add to correctLetters
     if (this.word.includes(letter)) {
       this.correctLetters.push(letter)
     } else {
+      // else add to incorrectLetters and subtract from remainingGuesses
       this.incorrectLetters.push(letter)
       this.remainingGuesses--
     }
+    // update displayWord
     this.displayWord = this.word
       .split('')
       .map(letter => (this.correctLetters.includes(letter) ? letter : '_'))
       .join('')
-    console.log(this.displayWord)
+    
   }
 
+ // implement the updateScreen function:
+  // updateScreen() {}
   updateScreen() {
-    
+    // update DOM elements
     document.getElementById('word-to-guess').textContent = this.displayWord
     document.getElementById('remaining-guesses').textContent = this.remainingGuesses
     document.getElementById('incorrect-letters').textContent = this.incorrectLetters.join(', ')
-    console.log(this.incorrectLetters)
-    console.log(this.correctLetters)
-    console.log(this.remainingGuesses)
-    console.log(this.displayWord)
+    
   }
 
+ // implement the isGameOver function:
+  // isGameOver() {}
   isGameOver() {
+    // return true if displayWord is equal to word or remainingGuesses is less than or equal to 0
     return this.displayWord === this.word || this.remainingGuesses <= 0
   }
 
+ // implement the getWinOrLoss function:
+  // getWinOrLoss() {}
   getWinOrLoss() {
+    // return 'win' if displayWord is equal to word and remainingGuesses is greater than 0
     if (this.displayWord === this.word && this.remainingGuesses > 0) {
       return 'win'
     } else if (this.remainingGuesses <= 0 && this.displayWord !== this.word) {
@@ -64,18 +74,6 @@ class Word {
     }
     
   }
- 
-  // implement the guessLetter function:
-  // guessLetter(letter) {}
-
-  // implement the updateScreen function:
-  // updateScreen() {}
-
-  // implement the isGameOver function:
-  // isGameOver() {}
-
-  // implement the getWinOrLoss function:
-  // getWinOrLoss() {}
 }
 
 function newGame() {
@@ -92,10 +90,10 @@ document.onkeyup = function(e) {
 
   // pass in guessed letter to word obj
   currentWord.guessLetter(pressedKey)
-  console.log(currentWord)
+  
   // allow word obj to update screen
   currentWord.updateScreen()
-  console.log(currentWord)
+  
 
   // check if game is over
   const gameOver = currentWord.isGameOver()
